@@ -30,4 +30,17 @@ public class BillRestController {
         });
         return bill;
     }
+    @GetMapping("/fullBill/{id}")
+    public Bill getfullBill(@PathVariable Long id) {
+
+        Bill bill = billRepository.findById(id).orElseThrow();
+
+        bill.setCustomer(customerRestClient.getCustomerById(bill.getCustomerId()));
+
+        bill.getProductItems().forEach(pi -> {
+            pi.setProduct(productRestClient.getProductById(pi.getProductId()));
+        });
+
+        return bill;
+    }
 }

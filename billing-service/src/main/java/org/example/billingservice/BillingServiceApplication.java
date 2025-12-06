@@ -14,11 +14,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
 
+@Configuration
 @SpringBootApplication
 @EnableFeignClients
 public class BillingServiceApplication {
@@ -26,6 +29,10 @@ public class BillingServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(BillingServiceApplication.class, args);
     }
+    public class RestConfig {
+        public RestConfig(RepositoryRestConfiguration config) {
+            config.exposeIdsFor(Bill.class);
+        };
     @Bean
     CommandLineRunner commandLineRunner(BillRepository billRepository,
                                         ProductItemRepository productItemRepository,
@@ -55,4 +62,4 @@ public class BillingServiceApplication {
         };
     }
 
-}
+}}
